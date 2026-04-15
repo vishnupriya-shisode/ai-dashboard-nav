@@ -1,0 +1,97 @@
+/* ── the outer pill wrapper ── */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #ffffff;
+  border-radius: 40px;
+  padding: 10px 16px;
+  width: fit-content;
+  margin: 0 auto;
+  position: relative;
+}
+
+/* ── each clickable icon slot ── */
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ── active item lifts up ── */
+.nav-item.active {
+  transform: translateY(-18px);
+}
+
+/* ── the circle behind active icon ── */
+.nav-item.active::before {
+  content: '';
+  position: absolute;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--active-color, #c4845a);
+  opacity: 0.15;
+  transition: opacity 0.3s ease;
+  z-index: 0;
+}
+
+/* ── the svg icon itself ── */
+.nav-icon {
+  width: 24px;
+  height: 24px;
+  position: relative;
+  z-index: 1;
+  transition: color 0.3s ease, stroke 0.3s ease;
+}
+
+/* ── muted color when not active ── */
+.nav-item:not(.active) .nav-icon {
+  color: #b0a89e;
+}
+
+/* ── label under icon ── */
+.nav-label {
+  font-size: 10px;
+  font-weight: 500;
+  color: #b0a89e;
+  transition: color 0.3s ease, opacity 0.3s ease;
+  position: relative;
+  z-index: 1;
+  opacity: 0;
+}
+
+/* ── label shows when active ── */
+.nav-item.active .nav-label {
+  opacity: 1;
+  color: #3a3530;
+}
+
+/* ── the colored dot under active icon ── */
+.nav-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--active-color, #c4845a);
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.nav-item.active .nav-dot {
+  opacity: 1;
+}
