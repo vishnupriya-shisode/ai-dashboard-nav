@@ -6,8 +6,8 @@
 }
 
 body {
-  background: #d4cfc8;
   min-height: 100vh;
+  background: #c8c4be;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -26,12 +26,14 @@ body {
   width: 390px;
   height: 844px;
   border-radius: 54px;
-  background: #1c1c1e;
+  /* the phone frame bg matches content so nav blends in */
+  background: transparent;
   position: relative;
   box-shadow:
-    0 0 0 1px #3a3a3a,
-    0 50px 100px rgba(0,0,0,0.5),
-    inset 0 0 0 1px #2a2a2a;
+    0 0 0 1px rgba(255,255,255,0.15),
+    0 0 0 11px #1c1c1e,
+    0 0 0 12px #3a3a3a,
+    0 50px 120px rgba(0,0,0,0.6);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -55,16 +57,19 @@ body {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  padding: 0 28px 8px;
+  padding: 0 28px 10px;
   flex-shrink: 0;
   position: relative;
   z-index: 10;
+  /* status bar blends with app screen bg */
+  background: transparent;
+  transition: background-color 0.5s ease;
 }
 
 .status-time {
   font-size: 15px;
   font-weight: 600;
-  color: #1c1c1e;
+  color: #2a2520;
 }
 
 .status-icons {
@@ -79,7 +84,7 @@ body {
   flex-direction: column;
   overflow: hidden;
   transition: background-color 0.5s ease;
-  border-radius: 0;
+  position: relative;
 }
 
 .app-content {
@@ -95,7 +100,7 @@ body {
 .page-title {
   font-size: 28px;
   font-weight: 600;
-  color: #1c1c1e;
+  color: #2a2520;
   letter-spacing: -0.5px;
 }
 
@@ -105,17 +110,21 @@ body {
   font-weight: 400;
 }
 
-.home-indicator {
-  height: 34px;
+/* bottom area — matches the bg so nav floats naturally */
+.phone-bottom {
+  padding: 8px 16px 16px;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  gap: 10px;
+  transition: background-color 0.5s ease;
   flex-shrink: 0;
 }
 
+/* home indicator */
 .home-indicator-bar {
   width: 134px;
   height: 5px;
-  background: rgba(0,0,0,0.2);
+  background: rgba(0,0,0,0.18);
   border-radius: 3px;
 }

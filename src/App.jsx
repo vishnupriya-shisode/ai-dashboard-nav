@@ -31,7 +31,7 @@ function App() {
 
         <div className="dynamic-island" />
 
-        <div className="status-bar" style={{ background: bgColor }}>
+        <div className="status-bar" style={{ backgroundColor: bgColor }}>
           <span className="status-time">9:41</span>
           <div className="status-icons">
             <svg width="17" height="12" viewBox="0 0 17 12" fill="#1c1c1e">
@@ -81,14 +81,16 @@ function App() {
           )}
         </div>
 
-        <NavBar
-          active={active}
-          setActive={setActive}
-          selectedModel={selectedModel}
-          setSelectedModel={setSelectedModel}
-        />
-
-        <div className="home-indicator" style={{ background: bgColor }}>
+        <div
+          className="phone-bottom"
+          style={{ backgroundColor: bgColor }}
+        >
+          <NavBar
+            active={active}
+            setActive={setActive}
+            selectedModel={selectedModel}
+            setSelectedModel={setSelectedModel}
+          />
           <div className="home-indicator-bar" />
         </div>
 
