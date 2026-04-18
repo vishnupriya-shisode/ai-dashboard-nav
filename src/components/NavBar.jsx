@@ -1,21 +1,17 @@
-// useState to track which icon is hovered
-// we get active and setActive from App.jsx as props
-import React, { useState } from 'react';
+// useState for tracking if model select is open
+import React, { useState, useEffect, useRef } from 'react';
 import './NavBar.css';
 
-// each nav item as an object
-// color = the earth tone for that section
-// label = text under icon when active
+// main nav items - same as before
 const navItems = [
   {
     id: 'home',
     label: 'Home',
     color: '#c4845a',
-    // house icon - simple svg drawn by hand
     icon: (active) => (
       <svg viewBox="0 0 24 24" fill="none"
         stroke={active ? '#c4845a' : '#b0a89e'}
-        strokeWidth="1.8" strokeLinecap="round">
+        strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <path d="M3 12L12 3l9 9"/>
         <path d="M9 21V12h6v9"/>
         <path d="M3 12v9h18V12"/>
@@ -26,20 +22,18 @@ const navItems = [
     id: 'chat',
     label: 'Chat',
     color: '#7a9e87',
-    // chat bubble icon for the AI assistant
     icon: (active) => (
       <svg viewBox="0 0 24 24" fill="none"
         stroke={active ? '#7a9e87' : '#b0a89e'}
-        strokeWidth="1.8" strokeLinecap="round">
+        strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
       </svg>
     ),
   },
   {
     id: 'analytics',
-    label: 'Analytics',
+    label: 'Stats',
     color: '#c4a455',
-    // bar chart icon for analytics
     icon: (active) => (
       <svg viewBox="0 0 24 24" fill="none"
         stroke={active ? '#c4a455' : '#b0a89e'}
@@ -54,7 +48,6 @@ const navItems = [
     id: 'settings',
     label: 'Settings',
     color: '#9a7a8a',
-    // gear icon for settings
     icon: (active) => (
       <svg viewBox="0 0 24 24" fill="none"
         stroke={active ? '#9a7a8a' : '#b0a89e'}
@@ -66,46 +59,99 @@ const navItems = [
   },
 ];
 
-// NavBar gets active and setActive from App.jsx
-// active = which one is selected
-// setActive = function to change which one is selected
-function NavBar({ active, setActive }) {
+// the 4 AI models with their colors and initials
+const models = [
+  { id: 'claude', label: 'Claude', initial: 'C', color: '#e07a3a', bg: '#fde8d8' },
+  { id: 'gpt', label: 'GPT', initial: 'G', color: '#4a9e5c', bg: '#d8f0de' },
+  { id: 'gemini', label: 'Gemini', initial: 'Ge', color: '#5c6bc0', bg: '#dde0f5' },
+  { id: 'copilot', label: 'Pilot', initial: 'Co', color: '#3a7ec4', bg: '#d8eaf5' },
+];
+
+function NavBar({ active, setActive, selectedModel, setSelectedModel }) {
+
+  // tracks if we are showing the model selector or the normal nav
+  const [showModels, setShowModels] = useState(false);
+
+  // ref so we can detect clicks outside the navbar
+  const navRef = useRef(null);
+
+  // listen for clicks outside the navbar
+  // if user clicks outside and models are showing - close them
+  useEffect(() => {
+    function handleClickOutside(e) {
+      if (navRef.current && !navRef.current.contains(e.target)) {
+        setShowModels(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    // cleanup when component unmounts - important!!
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  // when a nav item is clicked
+  function handleNavClick(id) {
+    if (id === 'chat') {
+      // chat is special - it opens model selector
+      setActive('chat');
+      setShowModels(true);
+    } else {
+      // everything else just switches the page
+      setActive(id);
+      setShowModels(false);
+    }
+  }
+
+  // when a model is selected
+  function handleModelClick(modelId) {
+    setSelectedModel(modelId);
+    // close model selector after picking
+    setShowModels(false);
+  }
 
   return (
-    <nav className="navbar">
+    <nav className="navbar" ref={navRef}>
 
-      {/* loop through each nav item and render it */}
-      {navItems.map((item) => {
+      {/* ── DEFAULT NAV STATE ── */}
+      <div className={`nav-state default ${showModels ? 'hidden' : ''}`}>
+        {navItems.map((item) => {
+          const isActive = active === item.id;
+          return (
+            <button
+              key={item.id}
+              className={`nav-item ${isActive ? 'active' : ''}`}
+              style={{ '--active-color': item.color }}
+              onClick={() => handleNavClick(item.id)}
+            >
+              <span className="nav-icon">{item.icon(isActive)}</span>
+              <span className="nav-label">{item.label}</span>
+              <span className="nav-dot" />
+            </button>
+          );
+        })}
+      </div>
 
-        // is this item the currently active one?
-        const isActive = active === item.id;
-
-        return (
-          <button
-            key={item.id}
-            className={`nav-item ${isActive ? 'active' : ''}`}
-
-            // CSS variable so the ::before circle knows what color to use
-            // this is how we pass dynamic colors into CSS pseudo elements
-            style={{ '--active-color': item.color }}
-
-            // when clicked update which item is active in App.jsx
-            onClick={() => setActive(item.id)}
-          >
-            {/* render the svg icon, passing isActive so it knows what color */}
-            <span className="nav-icon">
-              {item.icon(isActive)}
-            </span>
-
-            {/* label fades in when active via css */}
-            <span className="nav-label">{item.label}</span>
-
-            {/* tiny dot below the navbar */}
-            <span className="nav-dot" />
-
-          </button>
-        );
-      })}
+      {/* ── MODEL SELECT STATE ── */}
+      <div className={`nav-state models ${showModels ? 'visible' : ''}`}>
+        {models.map((model) => {
+          const isSelected = selectedModel === model.id;
+          return (
+            <button
+              key={model.id}
+              className={`model-item ${isSelected ? 'selected' : ''}`}
+              style={{ '--model-color': model.color }}
+              onClick={() => handleModelClick(model.id)}
+            >
+              <div
+                className="model-avatar"
+                style={{ background: model.bg, color: model.color }}
+              >
+                {model.initial}
+              </div>
+              <span className="model-label">{model.label}</span>
+            </button>
+          );
+        })}
+      </div>
 
     </nav>
   );
