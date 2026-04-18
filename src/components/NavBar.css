@@ -1,26 +1,68 @@
-/* ── the outer pill wrapper ── */
+/* ── outer pill wrapper ── */
 .navbar {
+  position: relative;
+  width: 280px;
+  height: 72px;
+  background: #ffffff;
+  border-radius: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  background: #ffffff;
-  border-radius: 40px;
-  padding: 10px 16px;
-  width: fit-content;
-  margin: 0 auto;
-  position: relative;
+  overflow: hidden;
 }
 
-/* ── each clickable icon slot ── */
+/* ── both states sit inside here ── */
+/* default nav and model select are stacked on top of each other */
+/* we show one and hide the other using opacity and pointer-events */
+.nav-state {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 8px 12px;
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+/* ── default state - the normal nav icons ── */
+.nav-state.default {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: all;
+}
+
+/* when model select is showing - push default down and hide it */
+.nav-state.default.hidden {
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+}
+
+/* ── model select state ── */
+.nav-state.models {
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+}
+
+/* when model select is active - bring it in */
+.nav-state.models.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: all;
+}
+
+/* ── each nav icon button ── */
 .nav-item {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 4px;
-  width: 64px;
-  height: 64px;
+  gap: 3px;
+  width: 58px;
+  height: 56px;
   border-radius: 50%;
   border: none;
   background: transparent;
@@ -29,63 +71,55 @@
   transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* ── active item lifts up ── */
+/* active nav item lifts up */
 .nav-item.active {
-  transform: translateY(-18px);
+  transform: translateY(-14px);
 }
 
-/* ── the circle behind active icon ── */
+/* soft circle behind active icon */
 .nav-item.active::before {
   content: '';
   position: absolute;
-  width: 52px;
-  height: 52px;
+  width: 46px;
+  height: 46px;
   border-radius: 50%;
   background: var(--active-color, #c4845a);
-  opacity: 0.15;
-  transition: opacity 0.3s ease;
+  opacity: 0.12;
   z-index: 0;
 }
 
-/* ── the svg icon itself ── */
+/* the svg icon */
 .nav-icon {
-  width: 24px;
-  height: 24px;
+  width: 22px;
+  height: 22px;
   position: relative;
   z-index: 1;
-  transition: color 0.3s ease, stroke 0.3s ease;
 }
 
-/* ── muted color when not active ── */
-.nav-item:not(.active) .nav-icon {
-  color: #b0a89e;
-}
-
-/* ── label under icon ── */
+/* label under active icon */
 .nav-label {
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 500;
   color: #b0a89e;
-  transition: color 0.3s ease, opacity 0.3s ease;
   position: relative;
   z-index: 1;
   opacity: 0;
+  transition: opacity 0.3s ease, color 0.3s ease;
 }
 
-/* ── label shows when active ── */
 .nav-item.active .nav-label {
   opacity: 1;
   color: #3a3530;
 }
 
-/* ── the colored dot under active icon ── */
+/* tiny dot below navbar for active item */
 .nav-dot {
-  width: 4px;
-  height: 4px;
+  width: 3px;
+  height: 3px;
   border-radius: 50%;
   background: var(--active-color, #c4845a);
   position: absolute;
-  bottom: -8px;
+  bottom: -10px;
   left: 50%;
   transform: translateX(-50%);
   opacity: 0;
@@ -94,4 +128,60 @@
 
 .nav-item.active .nav-dot {
   opacity: 1;
+}
+
+/* ── model select buttons ── */
+.model-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  width: 58px;
+  height: 56px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  border-radius: 12px;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+              background 0.2s ease;
+}
+
+/* slight lift on hover */
+.model-item:hover {
+  transform: translateY(-4px);
+}
+
+/* selected model lifts more */
+.model-item.selected {
+  transform: translateY(-8px);
+}
+
+/* the colored circle for each model */
+.model-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 600;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* ring around selected model */
+.model-item.selected .model-avatar {
+  box-shadow: 0 0 0 2px white, 0 0 0 3.5px var(--model-color);
+}
+
+/* model name label */
+.model-label {
+  font-size: 9px;
+  font-weight: 500;
+  color: #b0a89e;
+  transition: color 0.2s ease;
+}
+
+.model-item.selected .model-label {
+  color: #3a3530;
 }
