@@ -1,14 +1,61 @@
-/* remove default spacing from every element */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+/* main wrapper - full screen, flex column */
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 60px 20px 40px 20px;
+  /* this is what makes the bg color change smooth */
+  transition: background-color 0.5s ease;
 }
 
-/* set the default font and min height for the whole page */
-body {
-  min-height: 100vh;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  background-color: #f5f0eb;
-  transition: background-color 0.6s ease;
+/* content area sits in the middle */
+.app-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  justify-content: center;
+}
+
+/* big title */
+.page-title {
+  font-size: 32px;
+  font-weight: 500;
+  color: #3a3530;
+  letter-spacing: -0.5px;
+  /* fades when switching - subtle but nice */
+  transition: opacity 0.3s ease;
+}
+
+/* muted subtitle */
+.page-subtitle {
+  font-size: 15px;
+  color: #8a8078;
+  font-weight: 400;
+}
+
+/* model badge pill shown when a model is selected */
+.model-badge {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(255,255,255,0.7);
+  border: 0.5px solid rgba(0,0,0,0.08);
+  border-radius: 20px;
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #3a3530;
+  margin-top: 4px;
+}
+
+/* the colored dot inside the badge */
+.model-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  display: inline-block;
 }
