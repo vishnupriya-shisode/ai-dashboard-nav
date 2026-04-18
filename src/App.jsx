@@ -61,7 +61,7 @@ function App() {
           className="app-screen"
           style={{ backgroundColor: bgColor }}
         >
-          {active === 'chat' && selectedModel ? (
+          {active === 'chat' && selectedModel !== null ? (
             <ChatScreen model={selectedModel} />
           ) : (
             <div className="app-content">
