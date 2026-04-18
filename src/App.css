@@ -1,38 +1,61 @@
-/* ── outer page — centers the phone ── */
-.page {
-  min-height: 100vh;
-  background: #e8e4de;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
-/* ── iphone 17 pro frame ── */
-/* 393 x 852 is the actual screen size */
+body {
+  background: #d4cfc8;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.page {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
 .phone-frame {
-  width: 393px;
-  height: 852px;
+  width: 390px;
+  height: 844px;
   border-radius: 54px;
-  background: #1a1a1a;
-  padding: 12px;
+  background: #1c1c1e;
   position: relative;
   box-shadow:
     0 0 0 1px #3a3a3a,
-    0 40px 80px rgba(0,0,0,0.4),
+    0 50px 100px rgba(0,0,0,0.5),
     inset 0 0 0 1px #2a2a2a;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  flex-shrink: 0;
 }
 
-/* ── status bar ── */
+.dynamic-island {
+  width: 126px;
+  height: 37px;
+  background: #000;
+  border-radius: 20px;
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 30;
+}
+
 .status-bar {
+  height: 59px;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: space-between;
-  padding: 8px 24px 0;
-  height: 44px;
+  padding: 0 28px 8px;
   flex-shrink: 0;
   position: relative;
   z-index: 10;
@@ -41,7 +64,7 @@
 .status-time {
   font-size: 15px;
   font-weight: 600;
-  color: #3a3530;
+  color: #1c1c1e;
 }
 
 .status-icons {
@@ -50,31 +73,15 @@
   gap: 6px;
 }
 
-/* ── dynamic island ── */
-.dynamic-island {
-  width: 120px;
-  height: 34px;
-  background: #1a1a1a;
-  border-radius: 20px;
-  position: absolute;
-  top: 12px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 20;
-}
-
-/* ── the actual app screen inside the frame ── */
 .app-screen {
   flex: 1;
-  border-radius: 44px;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
   transition: background-color 0.5s ease;
-  position: relative;
+  border-radius: 0;
 }
 
-/* ── page content when not in chat ── */
 .app-content {
   flex: 1;
   display: flex;
@@ -87,22 +94,28 @@
 
 .page-title {
   font-size: 28px;
-  font-weight: 500;
-  color: #3a3530;
+  font-weight: 600;
+  color: #1c1c1e;
   letter-spacing: -0.5px;
 }
 
 .page-subtitle {
   font-size: 14px;
-  color: #8a8078;
+  color: #8a8480;
+  font-weight: 400;
 }
 
-/* ── home indicator at very bottom ── */
 .home-indicator {
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.home-indicator-bar {
   width: 134px;
   height: 5px;
-  background: rgba(255,255,255,0.3);
+  background: rgba(0,0,0,0.2);
   border-radius: 3px;
-  margin: 8px auto 4px;
-  flex-shrink: 0;
 }
