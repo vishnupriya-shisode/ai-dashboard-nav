@@ -122,7 +122,7 @@ const modelInfo = {
   copilot: { name: 'Copilot',  color: '#3a7ec4', bg: '#d8eaf5', initial: 'Co' },
 };
 
-function ChatScreen({ model }) {
+function ChatScreen({ model, lightMode }) {
   // visibleMessages = how many messages are currently showing
   // starts at 0 and increments as each message appears
   const [visibleMessages, setVisibleMessages] = useState(0);

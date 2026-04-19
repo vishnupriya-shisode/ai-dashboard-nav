@@ -1,81 +1,70 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-}
-
-body {
-  min-height: 100vh;
-  background: #c8c4be;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .page {
   min-height: 100vh;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 40px 20px;
+  padding: 32px 20px;
+  background: radial-gradient(
+    ellipse at 30% 20%,
+    #3d2810 0%,
+    #1a1208 50%,
+    #0d0a06 100%
+  );
 }
 
+/* smaller phone — 320 x 693 keeps exact iPhone ratio */
 .phone-frame {
-  width: 390px;
-  height: 844px;
-  border-radius: 54px;
-  /* the phone frame bg matches content so nav blends in */
-  background: transparent;
+  width: 320px;
+  height: 693px;
+  border-radius: 48px;
   position: relative;
-  box-shadow:
-    0 0 0 1px rgba(255,255,255,0.15),
-    0 0 0 11px #1c1c1e,
-    0 0 0 12px #3a3a3a,
-    0 50px 120px rgba(0,0,0,0.6);
+  flex-shrink: 0;
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  flex-shrink: 0;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.08),
+    0 0 0 10px #1c1410,
+    0 0 0 11px rgba(255,255,255,0.06),
+    0 40px 100px rgba(0,0,0,0.8),
+    0 0 60px rgba(180,100,40,0.15);
 }
 
 .dynamic-island {
-  width: 126px;
-  height: 37px;
+  width: 104px;
+  height: 32px;
   background: #000;
-  border-radius: 20px;
+  border-radius: 18px;
   position: absolute;
-  top: 14px;
+  top: 12px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 30;
 }
 
 .status-bar {
-  height: 59px;
+  height: 52px;
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  padding: 0 28px 10px;
+  padding: 0 24px 8px;
   flex-shrink: 0;
   position: relative;
   z-index: 10;
-  /* status bar blends with app screen bg */
-  background: transparent;
-  transition: background-color 0.5s ease;
+  transition: background-color 0.6s ease;
 }
 
 .status-time {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 600;
-  color: #2a2520;
+  color: rgba(255,255,255,0.9);
 }
 
 .status-icons {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
 }
 
 .app-screen {
@@ -83,7 +72,7 @@ body {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  transition: background-color 0.5s ease;
+  transition: background-color 0.6s ease;
   position: relative;
 }
 
@@ -93,38 +82,91 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 8px;
   padding: 20px;
 }
 
 .page-title {
-  font-size: 28px;
+  font-size: 24px;
   font-weight: 600;
-  color: #2a2520;
-  letter-spacing: -0.5px;
+  color: rgba(255,255,255,0.92);
+  letter-spacing: -0.3px;
 }
 
 .page-subtitle {
-  font-size: 14px;
-  color: #8a8480;
+  font-size: 13px;
+  color: rgba(255,255,255,0.4);
   font-weight: 400;
 }
 
-/* bottom area — matches the bg so nav floats naturally */
 .phone-bottom {
-  padding: 8px 16px 16px;
+  padding: 6px 14px 14px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
-  transition: background-color 0.5s ease;
+  gap: 8px;
+  transition: background-color 0.6s ease;
   flex-shrink: 0;
 }
 
-/* home indicator */
 .home-indicator-bar {
-  width: 134px;
-  height: 5px;
-  background: rgba(0,0,0,0.18);
+  width: 110px;
+  height: 4px;
+  background: rgba(255,255,255,0.2);
   border-radius: 3px;
+}
+
+/* liquid glass toggle — sits top right of screen */
+.glass-toggle {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  z-index: 20;
+  width: 56px;
+  height: 30px;
+  border-radius: 15px;
+  border: none;
+  cursor: pointer;
+  padding: 3px;
+  /* liquid glass */
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255,255,255,0.2);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.25),
+    0 2px 8px rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  transition: background 0.3s ease;
+}
+
+/* the sliding knob inside toggle */
+.glass-toggle-knob {
+  width: 24px;
+  height: 24px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.9);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* when toggled on — knob slides right */
+.glass-toggle.on .glass-toggle-knob {
+  transform: translateX(26px);
+}
+
+.glass-toggle.on {
+  background: rgba(200, 140, 80, 0.35);
+  border-color: rgba(200,140,80,0.5);
+}
+
+/* sun icon inside knob */
+.toggle-icon {
+  width: 12px;
+  height: 12px;
 }
